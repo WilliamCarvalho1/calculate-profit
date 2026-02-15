@@ -6,6 +6,7 @@ public record CargoResponseDTO(
         Long id,
         BigDecimal income,
         BigDecimal totalCost,
-        BigDecimal profit
+        BigDecimal profit,
+        Long shipmentId
 ) {
 }

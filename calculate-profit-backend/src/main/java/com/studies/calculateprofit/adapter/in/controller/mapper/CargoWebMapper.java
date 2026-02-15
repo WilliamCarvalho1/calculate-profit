@@ -14,7 +14,8 @@ public class CargoWebMapper {
                 cargo.getId(),
                 cargo.getIncome(),
                 cargo.getTotalCost(),
-                cargo.getProfit()
+                cargo.getProfit(),
+                cargo.getShipment().getId()
         );
     }
 }

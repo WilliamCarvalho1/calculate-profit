@@ -55,7 +55,8 @@ public class Cargo {
 
     public void changeAdditionalCost(BigDecimal additionalCost) {
         if (additionalCost == null) {
-            throw new DomainException("Additional Cost must not be null.");
+            this.additionalCost = BigDecimal.valueOf(0);
+            return;
         }
         if (additionalCost.signum() <= 0) {
             throw new DomainException("Additional Cost must be positive.");

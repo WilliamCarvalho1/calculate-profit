@@ -14,7 +14,6 @@ public record CargoRequestDTO(
         @Positive(message = "cost must be positive")
         BigDecimal cost,
 
-        @NotNull(message = "additionalCost must not be null")
         @Positive(message = "additionalCost must be positive")
         BigDecimal additionalCost
 ) {
