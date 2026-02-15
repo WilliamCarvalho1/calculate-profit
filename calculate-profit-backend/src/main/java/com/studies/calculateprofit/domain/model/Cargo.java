@@ -4,12 +4,10 @@ import com.studies.calculateprofit.application.port.command.UpdateCargoCommand;
 import com.studies.calculateprofit.domain.exception.DomainException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 public class Cargo {
     private Long id;
