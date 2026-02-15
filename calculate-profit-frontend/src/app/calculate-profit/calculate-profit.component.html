@@ -1,14 +1,21 @@
 <div class="container mt-4">
-  <div class="row">
+  <div class="row align-items-start">
+
     <div class="col-md-4">
-      <form [formGroup]="searchForm" (ngSubmit)="searchShipment()">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Shipment Id</mat-label>
-          <input matInput formControlName="shipmentId" placeholder="Enter Shipment Id"/>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Search</button>
-      </form>
+      <div class="card p-3">
+        <h5>Shipment Id</h5>
+        <form [formGroup]="searchForm" (ngSubmit)="searchShipment()" class="w-100">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Shipment Id</mat-label>
+            <input matInput formControlName="shipmentId" placeholder="Enter Shipment Id"/>
+          </mat-form-field>
+          <div class="d-flex justify-content-end mt-2">
+            <button mat-raised-button color="primary" type="submit">Search</button>
+          </div>
+        </form>
+      </div>
     </div>
+
     <div class="col-md-8">
       <div class="card p-3">
         <h5>Income & Outcome</h5>
@@ -33,10 +40,13 @@
               </mat-form-field>
             </div>
           </div>
-          <button mat-raised-button color="accent" type="submit">Calculate</button>
+          <div class="d-flex justify-content-end">
+            <button mat-raised-button color="primary" type="submit">Calculate</button>
+          </div>
         </form>
       </div>
     </div>
+
   </div>
 
   <div class="row mt-4">
