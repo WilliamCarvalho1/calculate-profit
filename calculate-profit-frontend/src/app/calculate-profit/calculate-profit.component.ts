@@ -29,7 +29,7 @@ export class CalculateProfitComponent {
 
   constructor(private fb: FormBuilder, private service: CalculateProfitService) {
     this.searchForm = this.fb.group({
-      shipmentId: ['', Validators.required]
+      shipmentId: ['']
     });
     this.calculationForm = this.fb.group({
       income: ['', Validators.required],
@@ -42,6 +42,31 @@ export class CalculateProfitComponent {
     const shipmentId = this.searchForm.value.shipmentId;
     this.service.getShipment(shipmentId).subscribe(data => {
       this.shipmentData = data;
+    });
+  }
+
+  calculateProfit() {
+    const shipmentId = this.searchForm.value.shipmentId?.toString().trim();
+    const calculation = this.calculationForm.value;
+
+    // If a shipment is selected, add cargo to that shipment
+    if (shipmentId) {
+      this.service.createCargo(+shipmentId, calculation).subscribe(() => {
+        this.refreshCargos(shipmentId);
+        this.calculationForm.reset();
+      });
+      return;
+    }
+
+    // If no shipment is selected, create a new shipment with this cargo
+    this.service.createShipment(calculation).subscribe(created => {
+      // created is a CargoResponseDTO: { id, income, totalCost, profit, shipmentId }
+      const newShipmentId = created.shipmentId;
+      if (newShipmentId) {
+        this.searchForm.patchValue({ shipmentId: newShipmentId.toString() });
+        this.refreshCargos(newShipmentId);
+      }
+      this.calculationForm.reset();
     });
   }
 
