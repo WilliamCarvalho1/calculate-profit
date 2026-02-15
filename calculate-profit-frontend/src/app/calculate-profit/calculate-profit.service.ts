@@ -26,4 +26,8 @@ export class CalculateProfitService {
   getShipmentWithCargos(id: number): Observable<any> {
     return this.http.get(`/api/v1/shipments/${id}`);
   }
+
+  deleteCargo(cargoId: number): Observable<void> {
+    return this.http.delete<void>(`/api/v1/shipments/cargos/${cargoId}`);
+  }
 }

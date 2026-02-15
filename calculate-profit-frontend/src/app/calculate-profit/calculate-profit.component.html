@@ -58,6 +58,7 @@
             <th>Income</th>
             <th>Total Cost</th>
             <th>Profit or Loss</th>
+            <th class="text-end">Delete</th>
           </tr>
           </thead>
           <tbody>
@@ -66,6 +67,17 @@
                 <td>{{ cargo.income }}</td>
                 <td>{{ cargo.totalCost }}</td>
                 <td>{{ cargo.profit }}</td>
+                <td class="text-end">
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    type="button"
+                    (click)="deleteCargo(cargo.id)"
+                    aria-label="Delete cargo"
+                  >
+                    <span class="material-icons" style="font-size: 18px;">close</span>
+                  </button>
+                </td>
               </tr>
             }
           </tbody>
