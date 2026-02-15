@@ -1,0 +1,66 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <form [formGroup]="searchForm" (ngSubmit)="searchShipment()">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Shipment Id</mat-label>
+          <input matInput formControlName="shipmentId" placeholder="Enter Shipment Id"/>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Search</button>
+      </form>
+    </div>
+    <div class="col-md-8">
+      <div class="card p-3">
+        <h5>Income & Outcome</h5>
+        <form [formGroup]="calculationForm" (ngSubmit)="calculateProfit()">
+          <div class="row mb-2">
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Income</mat-label>
+                <input matInput formControlName="income" type="text"/>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Cost</mat-label>
+                <input matInput formControlName="cost" type="text"/>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Additional Cost</mat-label>
+                <input matInput formControlName="additionalCost" type="text"/>
+              </mat-form-field>
+            </div>
+          </div>
+          <button mat-raised-button color="accent" type="submit">Calculate</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-12">
+      @if (shipmentData && shipmentData.cargos && shipmentData.cargos.length > 0) {
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>Income</th>
+            <th>Total Cost</th>
+            <th>Profit or Loss</th>
+          </tr>
+          </thead>
+          <tbody>
+            @for (cargo of shipmentData.cargos; track cargo.id; let $index = $index) {
+              <tr>
+                <td>{{ cargo.income }}</td>
+                <td>{{ cargo.totalCost }}</td>
+                <td>{{ cargo.profit }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+  </div>
+</div>
