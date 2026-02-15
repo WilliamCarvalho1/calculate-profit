@@ -4,6 +4,7 @@ import {CalculateProfitService} from './calculate-profit.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 
 @Component({
@@ -14,7 +15,8 @@ import {CommonModule} from '@angular/common';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   templateUrl: './calculate-profit.component.html',
   styleUrls: ['./calculate-profit.component.scss']
@@ -43,16 +45,19 @@ export class CalculateProfitComponent {
     });
   }
 
-  calculateProfit() {
+  deleteCargo(cargoId: number) {
     const shipmentId = this.searchForm.value.shipmentId;
-    const calculation = this.calculationForm.value;
-    this.service.createCargo(shipmentId, calculation).subscribe(result => {
-      // After creating cargo, refresh shipment data to update cargos table
-      this.service.getShipmentWithCargos(shipmentId).subscribe(data => {
-        this.shipmentData = data;
-        this.result = null;
-        this.calculationForm.reset();
-      });
+    if (!shipmentId) {
+      return;
+    }
+    this.service.deleteCargo(cargoId).subscribe(() => {
+      this.refreshCargos(shipmentId);
+    });
+  }
+
+  private refreshCargos(shipmentId: string | number) {
+    this.service.getShipmentWithCargos(+shipmentId).subscribe(data => {
+      this.shipmentData = data;
     });
   }
 }
