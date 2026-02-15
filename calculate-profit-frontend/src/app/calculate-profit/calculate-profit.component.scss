@@ -15,3 +15,24 @@
 .table {
   margin-top: 20px;
 }
+
+.cargo-table {
+  td,
+  th {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    vertical-align: middle; // align text with icon
+  }
+
+  .delete-cell {
+    width: 40px;
+    text-align: right;
+    vertical-align: middle;
+
+    button[mat-icon-button] {
+      line-height: 1;
+      padding: 0;
+    }
+  }
+
+}

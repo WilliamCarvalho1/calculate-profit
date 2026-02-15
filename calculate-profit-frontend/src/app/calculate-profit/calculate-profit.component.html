@@ -55,13 +55,13 @@
   <div class="row mt-4">
     <div class="col-12">
       @if (shipmentData && shipmentData.cargos && shipmentData.cargos.length > 0) {
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered cargo-table">
           <thead>
           <tr>
             <th>Income</th>
             <th>Total Cost</th>
             <th>Profit or Loss</th>
-            <th class="text-end">Delete Cargo</th>
+            <th class="delete-cell">Delete Cargo</th>
           </tr>
           </thead>
           <tbody>
@@ -70,7 +70,7 @@
                 <td>{{ cargo.income }}</td>
                 <td>{{ cargo.totalCost }}</td>
                 <td>{{ cargo.profit }}</td>
-                <td class="text-end">
+                <td class="delete-cell">
                   <button
                     mat-icon-button
                     color="warn"
