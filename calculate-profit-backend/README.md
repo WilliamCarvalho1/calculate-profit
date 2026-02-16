@@ -6,7 +6,7 @@
 - Spring Boot 3 (Web, Validation)
 - Spring Security with JWT (JJWT 0.11.x)
 - Spring Data (via custom ports/adapters)
-- PostgreSQL (via Docker Compose)
+- H2 (in memory)
 - Flyway (database migrations)
 - springdoc-openapi (Swagger UI)
 - JUnit 5, Mockito, AssertJ (tests)
@@ -18,21 +18,18 @@
 - `git clone https://github.com/WilliamCarvalho1/calculate-profit.git`
 - `cd calculate-profit/calculate-profit-backend`
 
-2. **Start dependencies (PostgreSQL) with Docker Compose**
-- `docker-compose up -d`
-
-3. **Build the application**
+2. **Build the application**
 - `mvn clean package`
 
-4. **Run the application**
+3**Run the application**
 - `mvn spring-boot:run`
 - Or run the generated JAR:
     - `java -jar target/shipment-catalog-0.0.1-SNAPSHOT.jar`
 
-5. **Access the API documentation (Swagger UI)**
+4**Access the API documentation (Swagger UI)**
 - Open `http://localhost:8080/swagger-ui.html`
 
-6. **Authentication**
+5**Authentication**
 - First call `/api/auth/login` with valid credentials to obtain a JWT.
 - Use the returned token as `Authorization: Bearer <token>` in subsequent requests.
 
