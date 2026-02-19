@@ -7,6 +7,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
+import {CalculationRequest, Cargo, Shipment} from './calculation.model';
 
 @Component({
   selector: 'app-calculate-profit',
@@ -25,15 +26,15 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class CalculateProfitComponent {
   searchForm: FormGroup;
   calculationForm: FormGroup;
-  result: any = null;
-  shipmentData: any = null;
+  result: Cargo | null = null;
+  shipmentData: Shipment | null = null;
   errorMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private service: CalculateProfitService) {
     this.searchForm = this.fb.group({
       shipmentId: ['']
     });
-    this.calculationForm = this.fb.group({
+    this.calculationForm = this.fb.group<CalculationRequest | any>({
       income: ['', Validators.required],
       cost: ['', Validators.required],
       additionalCost: ['']
@@ -64,9 +65,21 @@ export class CalculateProfitComponent {
     return `${context}: An unexpected error occurred. Please try again.`;
   }
 
+  private getShipmentIdFromForm(): number | null {
+    const raw = this.searchForm.value.shipmentId;
+    if (raw === null || raw === undefined || raw.toString().trim() === '') {
+      return null;
+    }
+    const asNumber = Number(raw);
+    return Number.isNaN(asNumber) ? null : asNumber;
+  }
+
   searchShipment() {
     this.errorMessage = null;
-    const shipmentId = this.searchForm.value.shipmentId;
+    const shipmentId = this.getShipmentIdFromForm();
+    if (shipmentId === null) {
+      return;
+    }
     this.service.getShipment(shipmentId).subscribe({
       next: data => {
         this.shipmentData = data;
@@ -80,12 +93,12 @@ export class CalculateProfitComponent {
 
   calculateProfit() {
     this.errorMessage = null;
-    const shipmentId = this.searchForm.value.shipmentId?.toString().trim();
-    const calculation = this.calculationForm.value;
+    const shipmentId = this.getShipmentIdFromForm();
+    const calculation = this.calculationForm.value as CalculationRequest;
 
     // If a shipment is selected, add cargo to that shipment
-    if (shipmentId) {
-      this.service.createCargo(+shipmentId, calculation).subscribe({
+    if (shipmentId !== null) {
+      this.service.createCargo(shipmentId, calculation).subscribe({
         next: () => {
           this.refreshCargos(shipmentId);
           this.calculationForm.reset();
@@ -117,8 +130,8 @@ export class CalculateProfitComponent {
 
   deleteCargo(cargoId: number) {
     this.errorMessage = null;
-    const shipmentId = this.searchForm.value.shipmentId;
-    if (!shipmentId) {
+    const shipmentId = this.getShipmentIdFromForm();
+    if (shipmentId === null) {
       return;
     }
     this.service.deleteCargo(cargoId).subscribe({
@@ -132,8 +145,8 @@ export class CalculateProfitComponent {
     });
   }
 
-  private refreshCargos(shipmentId: string | number) {
-    this.service.getShipmentWithCargos(+shipmentId).subscribe(data => {
+  private refreshCargos(shipmentId: number) {
+    this.service.getShipment(shipmentId).subscribe(data => {
       this.shipmentData = data;
     });
   }

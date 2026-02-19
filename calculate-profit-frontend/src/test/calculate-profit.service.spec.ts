@@ -20,40 +20,40 @@ describe('CalculateProfitService', () => {
   });
 
   it('should call getShipment', () => {
-    service.getShipment('SHIP123').subscribe(data => {
-      expect(data).toEqual({id: 'SHIP123'});
+    service.getShipment(123).subscribe(data => {
+      expect(data).toEqual({shipmentId: 123, cargos: []});
     });
-    const req = httpMock.expectOne('/api/v1/shipments/SHIP123');
+    const req = httpMock.expectOne('/api/v1/shipments/123');
     expect(req.request.method).toBe('GET');
-    req.flush({id: 'SHIP123'});
+    req.flush({shipmentId: 123, cargos: []});
   });
 
   it('should call createCargo', () => {
     const calculation = {income: 100, cost: 50, additionalCost: 10};
     service.createCargo(123, calculation).subscribe(data => {
-      expect(data).toEqual({income: 100, totalCost: 60, profitOrLoss: 40});
+      expect(data).toEqual({id: 1, income: 100, totalCost: 60, profit: 40, shipmentId: 123});
     });
     const req = httpMock.expectOne('/api/v1/shipments/123/cargos');
     expect(req.request.method).toBe('POST');
-    req.flush({income: 100, totalCost: 60, profitOrLoss: 40});
+    req.flush({id: 1, income: 100, totalCost: 60, profit: 40, shipmentId: 123});
   });
 
   it('should call createShipment', () => {
     const calculation = {income: 100, cost: 50, additionalCost: 10};
     service.createShipment(calculation).subscribe(data => {
-      expect(data).toEqual({income: 100, totalCost: 60, profitOrLoss: 40});
+      expect(data).toEqual({id: 1, income: 100, totalCost: 60, profit: 40, shipmentId: 123});
     });
     const req = httpMock.expectOne('/api/v1/shipments');
     expect(req.request.method).toBe('POST');
-    req.flush({income: 100, totalCost: 60, profitOrLoss: 40});
+    req.flush({id: 1, income: 100, totalCost: 60, profit: 40, shipmentId: 123});
   });
 
   it('should call getShipmentWithCargos', () => {
-    service.getShipmentWithCargos(123).subscribe(data => {
-      expect(data).toEqual({id: 123, cargos: [{income: 100, cost: 50, additionalCost: 10}]});
+    service.getShipment(123).subscribe(data => {
+      expect(data).toEqual({shipmentId: 123, cargos: [{id: 1, income: 100, totalCost: 60, profit: 40, shipmentId: 123}]});
     });
     const req = httpMock.expectOne('/api/v1/shipments/123');
     expect(req.request.method).toBe('GET');
-    req.flush({id: 123, cargos: [{income: 100, cost: 50, additionalCost: 10}]});
+    req.flush({shipmentId: 123, cargos: [{id: 1, income: 100, totalCost: 60, profit: 40, shipmentId: 123}]});
   });
 });

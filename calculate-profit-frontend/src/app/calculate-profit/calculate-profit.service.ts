@@ -1,30 +1,23 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {CalculationRequest, Cargo, Shipment} from './calculation.model';
 
 @Injectable({providedIn: 'root'})
 export class CalculateProfitService {
   constructor(private http: HttpClient) {
   }
 
-  getShipment(shipmentId: string): Observable<any> {
-    return this.http.get(`/api/v1/shipments/${shipmentId}`);
+  getShipment(shipmentId: number): Observable<Shipment> {
+    return this.http.get<Shipment>(`/api/v1/shipments/${shipmentId}`);
   }
 
-  createCargo(shipmentId: number, calculation: {
-    income: number;
-    cost: number;
-    additionalCost: number
-  }): Observable<any> {
-    return this.http.post(`/api/v1/shipments/${shipmentId}/cargos`, calculation);
+  createCargo(shipmentId: number, calculation: CalculationRequest): Observable<Cargo> {
+    return this.http.post<Cargo>(`/api/v1/shipments/${shipmentId}/cargos`, calculation);
   }
 
-  createShipment(calculation: { income: number; cost: number; additionalCost: number }): Observable<any> {
-    return this.http.post(`/api/v1/shipments`, calculation);
-  }
-
-  getShipmentWithCargos(id: number): Observable<any> {
-    return this.http.get(`/api/v1/shipments/${id}`);
+  createShipment(calculation: CalculationRequest): Observable<Cargo> {
+    return this.http.post<Cargo>(`/api/v1/shipments`, calculation);
   }
 
   deleteCargo(cargoId: number): Observable<void> {

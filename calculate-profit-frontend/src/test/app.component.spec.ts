@@ -27,6 +27,8 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.logo')).toBeTruthy();
-    expect(compiled.querySelector('.nav-link')?.textContent).toContain('Calculate Profit');
+    const links = Array.from(compiled.querySelectorAll('.nav-link')).map(el => el.textContent?.trim() ?? '');
+    expect(links).toContain('home Home');
+    expect(links).toContain('calculate Calculate Profit');
   });
 });
