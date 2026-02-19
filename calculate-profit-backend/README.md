@@ -14,24 +14,27 @@
 
 ## How to Run
 
-1. **Clone the repository**
+**1. Clone the repository**
 - `git clone https://github.com/WilliamCarvalho1/calculate-profit.git`
 - `cd calculate-profit/calculate-profit-backend`
 
-2. **Build the application**
+**2. Build the application**
 - `mvn clean package`
 
-3**Run the application**
+**3. Run the application**
 - `mvn spring-boot:run`
 - Or run the generated JAR:
     - `java -jar target/shipment-catalog-0.0.1-SNAPSHOT.jar`
 
-4**Access the API documentation (Swagger UI)**
+**4. Access the API documentation (Swagger UI)**
 - Open `http://localhost:8080/swagger-ui.html`
 
-5**Authentication**
+**5. Authentication**
 - First call `/api/auth/login` with valid credentials to obtain a JWT.
 - Use the returned token as `Authorization: Bearer <token>` in subsequent requests.
+
+**6. H2 access**
+- Open `http://localhost:8080/h2-console`
 
 # Hexagonal Architecture
 Also known as the Ports and Adapters pattern, is a software design approach that emphasizes loose coupling between the core business logic and external concerns like databases, user interfaces, and other systems. This separation allows for easier testing, maintenance, and modification of the application's core logic without impacting external components, and vice versa.
