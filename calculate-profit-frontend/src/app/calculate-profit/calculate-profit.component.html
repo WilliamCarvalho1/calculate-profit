@@ -67,9 +67,9 @@
           <tbody>
             @for (cargo of shipmentData.cargos; track cargo.id; let $index = $index) {
               <tr>
-                <td>{{ cargo.income }}</td>
-                <td>{{ cargo.totalCost }}</td>
-                <td>{{ cargo.profit }}</td>
+                <td>{{ cargo.income | number:'1.2-2' }}</td>
+                <td>{{ cargo.totalCost | number:'1.2-2' }}</td>
+                <td>{{ cargo.profit | number:'1.2-2' }}</td>
                 <td class="delete-cell">
                   <button
                     mat-icon-button
