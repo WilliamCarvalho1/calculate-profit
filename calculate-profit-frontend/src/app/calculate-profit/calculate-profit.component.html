@@ -11,7 +11,7 @@
         <form [formGroup]="searchForm" (ngSubmit)="searchShipment()" class="w-100">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Shipment Id</mat-label>
-            <input matInput formControlName="shipmentId" placeholder="Enter Shipment Id"/>
+            <input matInput formControlName="shipmentId" type="number" placeholder="Enter Shipment Id"/>
           </mat-form-field>
           <div class="d-flex justify-content-end mt-2">
             <button mat-raised-button color="primary" type="submit">Search</button>
@@ -28,19 +28,19 @@
             <div class="col">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Income</mat-label>
-                <input matInput formControlName="income" type="text"/>
+                <input matInput formControlName="income" type="number"/>
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Cost</mat-label>
-                <input matInput formControlName="cost" type="text"/>
+                <input matInput formControlName="cost" type="number"/>
               </mat-form-field>
             </div>
             <div class="col">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Additional Cost</mat-label>
-                <input matInput formControlName="additionalCost" type="text"/>
+                <input matInput formControlName="additionalCost" type="number"/>
               </mat-form-field>
             </div>
           </div>

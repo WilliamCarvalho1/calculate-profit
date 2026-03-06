@@ -20,3 +20,15 @@ body {
 .table {
   margin-top: 20px;
 }
+
+/* Chrome, Safari, Edge, Opera: hide number input arrows */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox: make it look like a normal text field */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
