@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {CommonModule} from '@angular/common';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CalculationRequest, Cargo, Shipment} from './calculation.model';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {ConfirmDialogComponent} from '../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-calculate-profit',
@@ -18,7 +20,9 @@ import {CalculationRequest, Cargo, Shipment} from './calculation.model';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule,
+    ConfirmDialogComponent
   ],
   templateUrl: './calculate-profit.component.html',
   styleUrls: ['./calculate-profit.component.scss']
@@ -30,7 +34,7 @@ export class CalculateProfitComponent {
   shipmentData: Shipment | null = null;
   errorMessage: string | null = null;
 
-  constructor(private fb: FormBuilder, private service: CalculateProfitService) {
+  constructor(private fb: FormBuilder, private service: CalculateProfitService, private dialog: MatDialog) {
     this.searchForm = this.fb.group({
       shipmentId: ['']
     });
@@ -148,6 +152,23 @@ export class CalculateProfitComponent {
   private refreshCargos(shipmentId: number) {
     this.service.getShipment(shipmentId).subscribe(data => {
       this.shipmentData = data;
+    });
+  }
+
+  confirmDeleteCargo(cargoId: number) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete cargo',
+        message: 'Are you sure you want to delete this cargo?',
+        confirmLabel: 'Delete',
+        cancelLabel: 'Close'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteCargo(cargoId);
+      }
     });
   }
 }
