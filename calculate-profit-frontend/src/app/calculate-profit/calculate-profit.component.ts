@@ -36,13 +36,35 @@ export class CalculateProfitComponent {
 
   constructor(private fb: FormBuilder, private service: CalculateProfitService, private dialog: MatDialog) {
     this.searchForm = this.fb.group({
-      shipmentId: ['']
+      shipmentId: ['', [Validators.pattern(/^\d*$/)]]
     });
     this.calculationForm = this.fb.group<CalculationRequest | any>({
       income: ['', Validators.required],
       cost: ['', Validators.required],
       additionalCost: ['']
     });
+  }
+
+  onShipmentIdKeyDown(event: KeyboardEvent): void {
+    // Allow control keys: backspace, delete, arrows, tab, etc.
+    const allowedKeys = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'Tab',
+      'Home',
+      'End'
+    ];
+
+    if (allowedKeys.includes(event.key)) {
+      return;
+    }
+
+    // Block dot, comma, minus, plus and any non-digit
+    if (!/^\d$/.test(event.key)) {
+      event.preventDefault();
+    }
   }
 
   private buildErrorMessage(context: string, error: unknown): string {
